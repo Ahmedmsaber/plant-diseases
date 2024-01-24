@@ -1,0 +1,103 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif, sans-serif;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            min-width: 100vw;
+        }
+        .form{
+            margin-top: 50px;
+            border-radius: 20px;
+            padding: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            height: 400px;
+            width: 400px;
+            background-color: antiquewhite;
+        }
+        .form h1{
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .form form input{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+
+        <h1>File Upload Form</h1>
+        <form>
+            <!-- <label for="file" >Choose a file:</label> -->
+            <input type="file" class="filename" name="file" id="file" required>
+            <br>
+            <button type="submit">Upload</button>
+        </form>
+    
+    </div>
+    <div class="result">
+
+    </div>
+    
+
+    <script>
+        async function prediction(e){
+            e.preventDefault();
+            const image_file = document.querySelector('.filename');
+            console.log(image_file.files[0])
+            const image = image_file.files[0]
+
+            var formData = new FormData();
+            formData.append('file', image);
+
+            axios.post('/predict', formData)
+                .then(response => {
+                    console.log('Upload successful', response.data);
+                    
+                    var reader = new FileReader();
+                    reader.onload = function (e){
+                        const imageURL = e.target.result
+                        result = document.querySelector('.result')
+                        result.innerHTML = `
+                            <div>
+                                <h2>Prediction Result: ${response.data.prediction}</h2>
+                                <img id="uploaded-image" src="${imageURL}" alt="Uploaded Image">
+                                
+                            </div>
+                        `
+                    }
+                    reader.readAsDataURL(image)
+                    
+                })
+                .catch(error => {
+                    console.error('Error during upload', error);
+                    // Handle error if needed
+                });
+        }
+
+        document.querySelector('form').addEventListener('submit', prediction)
+    </script>
+</body>
+</html>
+
