@@ -46,7 +46,7 @@ svgwrite==1.4.3
 tensorboard
 tensorboard-data-server
 tensorflow-estimator
-tensorflow-intel
+tensorflow
 tensorflow-io-gcs-filesystem
 termcolor==2.4.0
 Tree==0.2.4
