@@ -47,9 +47,10 @@ classes_name = [
   "Tomato___Tomato_mosaic_virus", 
   "Tomato___healthy" 
 ] 
-current_path = os.getcwd()
+
 # Load your trained Keras model 
-model = load_model('model.h5') 
+model_path = os.path.abspath('model.h5')
+model = load_model(model_path) 
  
 def getModel():
     return load_model(f"{current_path}/model.h5") 
