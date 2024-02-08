@@ -54,16 +54,16 @@ def getModel():
     return load_model('model.h5') 
 
 def prediction(model,img_path):
-    with tf.device('/CPU:0'):
-        img = Image.open(img_path) 
-        target_size = (128, 128)   
-        img = img.resize(target_size) 
-        img_array = image.img_to_array(img) 
-        img_array = np.expand_dims(img_array, axis=0) 
-        predictions = model.predict(img_array) 
-        predictions = np.array(predictions) 
-        predicted_class_index = np.argmax(predictions) 
-        predict = classes_name[predicted_class_index] 
-        return predict
+
+    img = Image.open(img_path) 
+    target_size = (128, 128)   
+    img = img.resize(target_size) 
+    img_array = image.img_to_array(img) 
+    img_array = np.expand_dims(img_array, axis=0) 
+    predictions = model.predict(img_array) 
+    predictions = np.array(predictions) 
+    predicted_class_index = np.argmax(predictions) 
+    predict = classes_name[predicted_class_index] 
+    return predict
 
 
