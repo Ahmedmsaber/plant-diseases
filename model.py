@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image 
 from tensorflow.keras.models import load_model 
+import os
 #from cate import load_classes 
  
  
@@ -46,12 +47,12 @@ classes_name = [
   "Tomato___Tomato_mosaic_virus", 
   "Tomato___healthy" 
 ] 
- 
+current_path = os.getcwd()
 # Load your trained Keras model 
 model = load_model('model.h5') 
  
 def getModel():
-    return load_model('model.h5') 
+    return load_model(f"{current_path}/model.h5") 
 
 def prediction(model,img_path):
 
